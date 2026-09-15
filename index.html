@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cuadernos de 5°</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --paper:#F5F7FA; --sheet:#FFFFFF; --grid:#E3E8F0; --ink:#1B2A4A; --ink-2:#56627A; --ink-3:#8C96A8;
+  --line:#D5DCE6; --hover:#EEF2F8; --focus:#2F5BD3;
+  --c:#2E8A57; --c-soft:#DDF1E5; --c-ink:#1D5E3A;
+  --i:#C98A12; --i-soft:#FBEFD2; --i-ink:#7A5308;
+  --np:#C4443A; --np-soft:#F8DEDB; --np-ink:#86271F;
+  --empty:#EDF0F4; --empty-ink:#A3ACBB;
+  --shadow:0 10px 40px rgba(27,42,74,.18);
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1522; --sheet:#161E2E; --grid:#1C2536; --ink:#E6EBF4; --ink-2:#A6B0C3; --ink-3:#6F7A8F;
+    --line:#2A3448; --hover:#1E283B; --focus:#7C9BFF;
+    --c:#4DB47B; --c-soft:#17382A; --c-ink:#8FDDB0;
+    --i:#E3A93A; --i-soft:#3A2E14; --i-ink:#F2CF85;
+    --np:#E4675C; --np-soft:#40201E; --np-ink:#F4A69E;
+    --empty:#1E2636; --empty-ink:#55607A; --shadow:0 10px 40px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1522; --sheet:#161E2E; --grid:#1C2536; --ink:#E6EBF4; --ink-2:#A6B0C3; --ink-3:#6F7A8F;
+  --line:#2A3448; --hover:#1E283B; --focus:#7C9BFF;
+  --c:#4DB47B; --c-soft:#17382A; --c-ink:#8FDDB0;
+  --i:#E3A93A; --i-soft:#3A2E14; --i-ink:#F2CF85;
+  --np:#E4675C; --np-soft:#40201E; --np-ink:#F4A69E;
+  --empty:#1E2636; --empty-ink:#55607A; --shadow:0 10px 40px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--body);font-size:15px;line-height:1.5;color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  padding:28px 16px 48px;
+}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:22px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* Header */
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:.95;margin:6px 0 0;letter-spacing:-.02em;text-wrap:balance}
+h1 span{color:var(--c)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-2)}
+.legend b{font-family:var(--mono);display:inline-grid;place-items:center;min-width:30px;height:22px;padding:0 5px;border-radius:4px;margin-right:6px;font-size:11px}
+
+/* Notice */
+.notice{display:flex;gap:12px;align-items:flex-start;background:var(--i-soft);color:var(--i-ink);border:1.5px dashed var(--i);border-radius:10px;padding:14px 18px;font-size:14px;line-height:1.5}
+.notice svg{flex-shrink:0;margin-top:1px;color:var(--i)}
+.notice strong{display:block;font-family:var(--display);font-size:16px;margin-bottom:2px}
+.notice em{font-style:normal;font-weight:700}
+
+/* Summary strip */
+.strip{background:var(--sheet);border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:14px 18px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none}
+.stat .n{font-family:var(--display);font-weight:800;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12px;color:var(--ink-2);margin-top:4px}
+.bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--empty);margin-top:10px}
+.bar i{display:block;height:100%}
+@media (max-width:640px){.strip{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:none}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* Controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search{flex:1 1 260px;position:relative}
+.search input{width:100%;font:inherit;font-size:16px;padding:12px 14px 12px 42px;border-radius:8px;border:1.5px solid var(--line);background:var(--sheet);color:var(--ink)}
+.search input::placeholder{color:var(--ink-3)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.seg{display:flex;flex-wrap:wrap;background:var(--sheet);border:1.5px solid var(--line);border-radius:8px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:8px 12px;border-radius:5px;cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2)}
+.seg button:hover{background:var(--hover)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.label{font-size:12px;color:var(--ink-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;margin-right:2px}
+
+/* Table */
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.scroll{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+th,td{padding:0;text-align:center;white-space:nowrap}
+thead th{position:sticky;top:0;background:var(--sheet);z-index:2}
+.dayrow th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding:10px 4px 4px;border-bottom:1px solid var(--line)}
+.dayrow th.day{border-left:2px solid var(--line)}
+.courserow th{padding:6px 3px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom}
+.courserow .cs{font-family:var(--mono);font-weight:700;font-size:11px;display:block}
+.courserow .cp{font-size:10px;color:var(--ink-3);font-weight:400;display:block;max-width:58px;overflow:hidden;text-overflow:ellipsis;margin:0 auto}
+th.dstart,td.dstart{border-left:2px solid var(--line)}
+.namecol{position:sticky;left:0;z-index:1;background:var(--sheet);text-align:left;border-right:1px solid var(--line)}
+thead .namecol{z-index:3}
+tbody tr{cursor:pointer}
+tbody tr:hover td,tbody tr:hover .namecol{background:var(--hover)}
+tbody td{border-bottom:1px solid var(--grid);padding:4px 2px}
+.who{display:flex;align-items:center;gap:10px;padding:4px 14px 4px 10px;min-width:240px}
+.who .num{font-family:var(--mono);font-size:11px;color:var(--ink-3);width:18px;text-align:right;font-variant-numeric:tabular-nums}
+.who .nm{font-weight:700;font-size:13px;flex:1;white-space:normal;line-height:1.25}
+.pct{font-family:var(--mono);font-size:12px;font-weight:700;padding:0 10px;font-variant-numeric:tabular-nums;border-left:1px solid var(--line)}
+.m{display:inline-grid;place-items:center;width:30px;height:24px;border-radius:4px;font-family:var(--mono);font-weight:700;font-size:10px}
+.m-C{background:var(--c-soft);color:var(--c-ink)}
+.m-I{background:var(--i);color:#fff}
+.m-NP{background:var(--np);color:#fff}
+.m-{background:var(--empty);color:var(--empty-ink)}
+.nores{padding:40px;text-align:center;color:var(--ink-2)}
+.hint{font-size:13px;color:var(--ink-2);margin:0}
+
+/* Cards (mobile-friendly list) */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;text-align:left;display:grid;gap:10px}
+.card:hover{border-color:var(--ink-3)}
+.card .top{display:flex;gap:10px;align-items:baseline}
+.card .num{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.card .nm{font-weight:700;flex:1;line-height:1.25}
+.card .p{font-family:var(--display);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
+.dots{display:flex;flex-wrap:wrap;gap:3px}
+.dots i{width:12px;height:12px;border-radius:2px;display:block}
+.counts{display:flex;gap:14px;font-size:12px;color:var(--ink-2);font-family:var(--mono)}
+
+/* Detail dialog */
+dialog{border:none;padding:0;border-radius:14px;width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 48px);background:var(--sheet);color:var(--ink);box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(15,21,34,.55)}
+.dlg{padding:22px 22px 26px;display:grid;gap:18px}
+.dlg-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.dlg h2{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.05;margin:4px 0 0;text-wrap:balance}
+.close{border:1.5px solid var(--line);background:none;border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:20px;line-height:1;flex-shrink:0}
+.close:hover{background:var(--hover)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{border-radius:8px;padding:10px;text-align:center}
+.tile .n{font-family:var(--display);font-weight:800;font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:11px;margin-top:4px;font-weight:700}
+.todo{border:1.5px dashed var(--np);border-radius:8px;padding:12px 14px;background:var(--np-soft);color:var(--np-ink)}
+.todo.ok{border-color:var(--c);background:var(--c-soft);color:var(--c-ink)}
+.todo strong{display:block;margin-bottom:4px}
+.todo ul{margin:0;padding-left:18px;font-size:14px}
+.days{display:grid;gap:14px}
+.days h3{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 4px;padding-bottom:4px;border-bottom:1.5px solid var(--ink)}
+.crow{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--grid)}
+.crow .cn{flex:1;font-weight:700;font-size:14px}
+.crow .pr{font-size:12px;color:var(--ink-3)}
+.crow .tag{font-family:var(--mono);font-size:11px;font-weight:700;border-radius:4px;padding:3px 8px;min-width:96px;text-align:center}
+.tag-C{background:var(--c-soft);color:var(--c-ink)}
+.tag-I{background:var(--i-soft);color:var(--i-ink)}
+.tag-NP{background:var(--np-soft);color:var(--np-ink)}
+.tag-{background:var(--empty);color:var(--empty-ink)}
+footer{font-size:12px;color:var(--ink-3);text-align:center}
+@media (prefers-reduced-motion:no-preference){.card,.seg button{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Revisión de cuadernos · 5° de secundaria</div>
+      <h1>¿Cómo está <span>tu cuaderno</span>?</h1>
+    </div>
+    <div class="legend" aria-label="Leyenda">
+      <span><b class="m m-C">C</b>Completo</span>
+      <span><b class="m m-I">I</b>Incompleto</span>
+      <span><b class="m m-NP">NP</b>No presentó</span>
+      <span><b class="m m-">—</b>Aún no revisado</span>
+    </div>
+  </header>
+
+  <aside class="notice" role="note">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    <div>
+      <strong>Revisión en proceso</strong>
+      Todavía falta pasar las notas de la hoja de revisión al sistema. Si ves cursos en gris (<em>aún no revisado</em>) o una nota que no coincide, no te preocupes: <b>mañana se termina de revisar</b> y se actualiza esta página.
+    </div>
+  </aside>
+
+  <section class="strip" id="strip" aria-label="Resumen del salón"></section>
+
+  <div class="controls">
+    <label class="search" for="q">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Busca tu apellido o nombre…" autocomplete="off">
+    </label>
+    <div class="seg" role="group" aria-label="Vista">
+      <button id="v-tabla" data-view="tabla" aria-pressed="true">Tabla del salón</button>
+      <button id="v-fichas" data-view="fichas" aria-pressed="false">Fichas</button>
+    </div>
+    <div class="seg" role="group" aria-label="Día" id="daySeg"></div>
+  </div>
+
+  <p class="hint">Toca tu nombre para ver el detalle y qué cuadernos te faltan ponerte al día.</p>
+
+  <main id="view"></main>
+
+  <footer>Los porcentajes cuentan solo los cursos que ya fueron revisados.</footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgName"><div class="dlg" id="dlgBody"></div></dialog>
+
+<script>
+const students=["APAZA CAPAJAÑA JHON BEKHAM","AQUINO PACCARA IDINA","CCOLLA VILCA YOBANA MILAGROS","CHARCA JIHUALLANCA YOSELIN YAMIRA","CHATA CHOQUE LEYDI YAMELI","COAQUIRA CHUQUIMAMANI DEYSI NICOL","COAQUIRA MARAZA LUIS ANGEL","COILA TIÑA PIERO GONSALO MAYCOL","CONDORI POMA JAMES PIERRE DANIEL","QUISPE CRUZ THANIA YAMILET","DURAN ROJAS LINDSAY YUNIETH","HUAQUISTO ORTIZ GABBY MASSIEL","HUARACHI HUALLA JOHANA ABIGAIL","LAURA APAZA CARLOS WLADIMIR","LOAYZA LUQUEQUISPE YOHAN URIEL","MAMANI MERMA HUGO MATHYAS","MAMANI PAYEHUANCA REYDER YOJHAN","MAMANI VILLASANTE JHON CRISTIAN","MITA QUISPE JUNIOR JORDAN","QUISPE HUANCA AXEL CIRO LIONEL","QUISPE YANA KAREN MARIA","RIVADENEYRA CONDORI NATHANIEL ESTHER","RODRIGUEZ LIMA LUZ KLARICET","ROQUE SUCASACA FAYFER","TICONA MAMANI JHOEL ANDERSON","TURPO ROJO ANGHELA MARCELA","QUISPE CRUZ THANIA YAMILET (27)"];
+
+const days=[
+{name:"Viernes",courses:[{name:"Raz. Matemático",short:"RM",prof:"Gladys"},{name:"Debate/Plan Lector",short:"D/PL",prof:"Jhoselin"},{name:"Geografía",short:"GEO",prof:"Pablo"},{name:"Inglés",short:"ING",prof:"Rosy"},{name:"Educ. Física",short:"EF",prof:"Mariela"},{name:"Raz. Verbal",short:"RV",prof:"Lizet Milagros"},{name:"Literatura",short:"LIT",prof:"Jhoselin"}]},
+{name:"Lunes",courses:[{name:"Inglés",short:"ING",prof:"Rosy"},{name:"Aritmética",short:"ARI",prof:"Reyner"},{name:"Arte y Cultura",short:"AyC",prof:"Beatriz"},{name:"Trigonometría",short:"TRIG",prof:"Jhean Franco"}]},
+{name:"Martes",courses:[{name:"Historia Universal",short:"HU",prof:"Pablo"},{name:"Física",short:"FÍS",prof:"Pablo"},{name:"Educ. Financiera",short:"EFIN",prof:"Luis Albert"},{name:"Cívica",short:"CÍV",prof:"Rudy"},{name:"Filosofía",short:"FIL",prof:"José"},{name:"Física 2",short:"FÍS2",prof:"Reyner"}]},
+{name:"Miércoles",courses:[{name:"Tecnologías",short:"TEC",prof:"Lenin"},{name:"Física",short:"FÍS",prof:"Reyner"},{name:"Anatomía",short:"ANA",prof:"Julio"},{name:"Biología",short:"BIO",prof:"Jhean Franco"},{name:"Geometría",short:"GEOM",prof:"Jhean Franco"},{name:"Valores",short:"VAL",prof:"Psic. Delma"},{name:"Psicología",short:"PSI",prof:"Darwin"}]},
+{name:"Jueves",courses:[{name:"Álgebra",short:"ÁLG",prof:"Reyner"},{name:"Lenguaje",short:"LENG",prof:"Lizet Milagros"},{name:"Tutoría",short:"TUT",prof:"Mariela"},{name:"Química",short:"QUÍ",prof:"Sheyla"},{name:"Economía",short:"ECO",prof:"Deysi"}]}
+];
+
+const marks=[
+["C","C","C","C","C","C","C","C","NP","","C","C","","C","C","I","C","C","","","","","","","","C","","",""],
+["C","NP","C","C","C","C","I","I","I","C","C","","","I","I","I","","C","","","","","","","","","","",""],
+["I","NP","C","C","NP","NP","C","C","C","NP","NP","","","I","","","","C","","","","","","","","","","",""],
+["C","C","NP","C","C","C","C","C","I","C","C","","","C","","","","C","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","C","NP","C","","","I","C","","","C","","","","","","","","","","",""],
+["C","NP","C","C","C","NP","NP","C","NP","NP","NP","","","C","","","","C","","","","","","","","","","",""],
+["NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP"],
+["C","NP","I","I","NP","I","C","C","I","NP","C","","","I","I","I","","C","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","C","C","C","C","","C","C","C","C","C","","","","C","","","C","C","","",""],
+["C","C","C","C","C","C","C","C","C","C","C","C","","C","C","C","C","C","","","","","","","","","","",""],
+["C","NP","C","C","C","C","NP","C","I","C","C","","","C","","","","I","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","C","NP","C","C","","C","C","C","C","C","","","","","","","","","","",""],
+["C","I","C","C","C","C","C","C","I","NP","C","","","","C","","","C","","","","","","","","","","",""],
+["NP","NP","NP","NP","NP","C","C","C","NP","NP","I","","","","C","C","","NP","","","","","","","","","","",""],
+["C","C","C","I","C","C","C","C","C","C","C","C","","C","C","C","C","C","C","","","C","","","C","C","","",""],
+["C","NP","C","C","C","C","C","C","I","NP","C","","","C","","","","C","","","","","","","","","","",""],
+["NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP"],
+["NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","","I","I","C","I","C","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","C","NP","C","C","","C","C","","","C","","","","","","","","","","",""],
+["NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP","NP"],
+["NP","NP","C","C","C","NP","NP","NP","NP","NP","NP","","","","C","","","C","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","I","NP","C","","","","","","","C","","","","","","","","","","",""],
+["C","NP","C","NP","C","NP","C","C","I","NP","NP","","","","","","","C","","","","","","","","","","",""],
+["C","C","I","C","I","C","C","C","I","NP","C","","","I","I","I","","C","","","","","","","","","","",""],
+["C","C","NP","C","I","C","I","C","I","NP","I","","","C","","","","C","","","","","","","","","","",""],
+["C","NP","NP","NP","NP","C","C","C","I","NP","C","","","I","C","I","","C","","","","","","","","","","",""],
+["C","C","C","C","C","C","C","C","C","C","C","C","","C","C","C","C","C","","","","","","","","","","",""]
+];
+
+const all=[];days.forEach((d,di)=>d.courses.forEach((c,ci)=>all.push({...c,day:di,first:ci===0})));
+const LABEL={C:"Completo",I:"Incompleto",NP:"No presentó","":"Sin revisar"};
+const state={q:"",view:"tabla",day:-1};
+
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function counts(si,cols){const k={C:0,I:0,NP:0,"":0};cols.forEach(g=>k[marks[si][g]]++);const rev=k.C+k.I+k.NP;return{...k,rev,pct:rev?Math.round(k.C/rev*100):null}}
+const pctColor=p=>p===null?"var(--ink-3)":p>=80?"var(--c)":p>=50?"var(--i)":"var(--np)";
+const fillColor={C:"var(--c)",I:"var(--i)",NP:"var(--np)","":"var(--empty)"};
+const cols=()=>all.map((_,g)=>g).filter(g=>state.day<0||all[g].day===state.day);
+
+function renderStrip(){
+  const k={C:0,I:0,NP:0,"":0};marks.forEach(r=>r.forEach(m=>k[m]++));
+  const rev=k.C+k.I+k.NP,p=x=>rev?(x/rev*100):0;
+  document.getElementById("strip").innerHTML=`
+    <div class="stat"><div class="n">${rev}</div><div class="l">cuadernos revisados de ${students.length*all.length}</div>
+      <div class="bar"><i style="width:${p(k.C)}%;background:var(--c)"></i><i style="width:${p(k.I)}%;background:var(--i)"></i><i style="width:${p(k.NP)}%;background:var(--np)"></i></div></div>
+    <div class="stat"><div class="n" style="color:var(--c)">${Math.round(p(k.C))}%</div><div class="l">completos (${k.C})</div></div>
+    <div class="stat"><div class="n" style="color:var(--i)">${Math.round(p(k.I))}%</div><div class="l">incompletos (${k.I})</div></div>
+    <div class="stat"><div class="n" style="color:var(--np)">${Math.round(p(k.NP))}%</div><div class="l">no presentados (${k.NP})</div></div>`;
+}
+
+function renderDaySeg(){
+  const opts=[{i:-1,n:"Todos"},...days.map((d,i)=>({i,n:d.name}))];
+  document.getElementById("daySeg").innerHTML=`<span class="label" style="align-self:center;padding-left:8px">Día</span>`+
+    opts.map(o=>`<button id="day${o.i+1}" aria-pressed="${state.day===o.i}" data-day="${o.i}">${o.n}</button>`).join("");
+}
+
+function visible(){const q=norm(state.q.trim());return students.map((n,i)=>i).filter(i=>!q||norm(students[i]).includes(q))}
+
+function renderTable(){
+  const C=cols(),rows=visible();
+  let h=`<div class="sheet"><div class="scroll"><table><thead><tr class="dayrow"><th class="namecol"></th><th></th>`;
+  days.forEach((d,di)=>{const n=C.filter(g=>all[g].day===di).length;if(n)h+=`<th colspan="${n}" class="day">${d.name}</th>`});
+  h+=`</tr><tr class="courserow"><th class="namecol" style="text-align:left;padding-left:38px;font-size:12px;color:var(--ink-2)">Alumno</th><th class="pct" style="font-size:10px;color:var(--ink-2)">% C</th>`;
+  C.forEach(g=>{const c=all[g];h+=`<th class="${c.first||state.day>=0&&g===C[0]?"dstart":""}" title="${c.name} — ${c.prof}"><span class="cs">${c.short}</span><span class="cp">${c.prof}</span></th>`});
+  h+=`</tr></thead><tbody>`;
+  rows.forEach(si=>{const k=counts(si,C);
+    h+=`<tr data-si="${si}" tabindex="0"><td class="namecol"><div class="who"><span class="num">${si+1}</span><span class="nm">${students[si]}</span></div></td><td class="pct" style="color:${pctColor(k.pct)}">${k.pct===null?"—":k.pct+"%"}</td>`;
+    C.forEach(g=>{const m=marks[si][g];h+=`<td class="${all[g].first?"dstart":""}"><span class="m m-${m}" title="${all[g].name}: ${LABEL[m]}">${m||"·"}</span></td>`});
+    h+=`</tr>`});
+  if(!rows.length)h+=`<tr><td colspan="${C.length+2}" class="nores">No hay ningún alumno con “${state.q}”. Revisa cómo escribiste tu apellido.</td></tr>`;
+  return h+`</tbody></table></div></div>`;
+}
+
+function renderCards(){
+  const C=cols(),rows=visible();
+  if(!rows.length)return `<div class="sheet nores">No hay ningún alumno con “${state.q}”. Revisa cómo escribiste tu apellido.</div>`;
+  return `<div class="cards">`+rows.map(si=>{const k=counts(si,C);
+    return `<button class="card" data-si="${si}" id="card${si}"><div class="top"><span class="num">${String(si+1).padStart(2,"0")}</span><span class="nm">${students[si]}</span><span class="p" style="color:${pctColor(k.pct)}">${k.pct===null?"—":k.pct+"%"}</span></div>
+      <div class="dots" aria-hidden="true">${C.map(g=>`<i style="background:${fillColor[marks[si][g]]}"></i>`).join("")}</div>
+      <div class="counts"><span style="color:var(--c)">C ${k.C}</span><span style="color:var(--i)">I ${k.I}</span><span style="color:var(--np)">NP ${k.NP}</span><span>sin revisar ${k[""]}</span></div></button>`}).join("")+`</div>`;
+}
+
+function render(){
+  renderDaySeg();
+  document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===state.view));
+  document.getElementById("view").innerHTML=state.view==="tabla"?renderTable():renderCards();
+}
+
+function openStudent(si){
+  const G=all.map((_,g)=>g),k=counts(si,G);
+  const pend=G.filter(g=>marks[si][g]==="I"||marks[si][g]==="NP");
+  let h=`<div class="dlg-head"><div><div class="eyebrow">N° ${si+1} · 5° de secundaria</div><h2 id="dlgName">${students[si]}</h2></div><button class="close" id="dlgClose" aria-label="Cerrar">×</button></div>
+  <div class="tiles">
+    <div class="tile" style="background:var(--c-soft);color:var(--c-ink)"><div class="n">${k.C}</div><div class="l">Completos</div></div>
+    <div class="tile" style="background:var(--i-soft);color:var(--i-ink)"><div class="n">${k.I}</div><div class="l">Incompletos</div></div>
+    <div class="tile" style="background:var(--np-soft);color:var(--np-ink)"><div class="n">${k.NP}</div><div class="l">No presentó</div></div>
+    <div class="tile" style="background:var(--empty);color:var(--ink)"><div class="n" style="color:${pctColor(k.pct)}">${k.pct===null?"—":k.pct+"%"}</div><div class="l">de ${k.rev} revisados</div></div>
+  </div>`;
+  h+=pend.length
+    ?`<div class="todo"><strong>Ponte al día en ${pend.length} ${pend.length===1?"cuaderno":"cuadernos"}:</strong><ul>${pend.map(g=>`<li>${all[g].name} (${days[all[g].day].name}, Prof. ${all[g].prof}) — ${LABEL[marks[si][g]].toLowerCase()}</li>`).join("")}</ul></div>`
+    :`<div class="todo ok"><strong>¡Todo al día!</strong>Todos tus cuadernos revisados están completos.</div>`;
+  h+=`<p class="hint" style="margin:0">⏳ Aún falta pasar notas de la hoja de revisión al sistema; mañana se termina de revisar.</p>`;
+  h+=`<div class="days">`+days.map((d,di)=>`<div><h3>${d.name}</h3>`+G.filter(g=>all[g].day===di).map(g=>{const m=marks[si][g];
+    return `<div class="crow"><span class="cn">${all[g].name}</span><span class="pr">${all[g].prof}</span><span class="tag tag-${m}">${LABEL[m]}</span></div>`}).join("")+`</div>`).join("")+`</div>`;
+  const dlg=document.getElementById("dlg");
+  document.getElementById("dlgBody").innerHTML=h;
+  document.getElementById("dlgClose").onclick=()=>dlg.close();
+  dlg.showModal();
+}
+
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value;render()});
+document.addEventListener("click",e=>{
+  const v=e.target.closest("[data-view]");if(v){state.view=v.dataset.view;render();return}
+  const d=e.target.closest("[data-day]");if(d){state.day=+d.dataset.day;render();return}
+  const s=e.target.closest("[data-si]");if(s){openStudent(+s.dataset.si)}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"){const s=e.target.closest("tr[data-si]");if(s)openStudent(+s.dataset.si)}});
+document.getElementById("dlg").addEventListener("click",e=>{if(e.target.id==="dlg")e.target.close()});
+if(matchMedia("(max-width:700px)").matches)state.view="fichas";
+renderStrip();render();
+</script>
+</body>
+</html>
